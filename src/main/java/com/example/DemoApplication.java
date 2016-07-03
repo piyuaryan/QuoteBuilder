@@ -1,49 +1,55 @@
 package com.example;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import com.example.domain.Developer;
+import com.example.domain.Skill;
+import com.example.repo.DeveloperRepository;
+import com.example.repo.SkillRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @SpringBootApplication
-public class DemoApplication {
+public class DemoApplication implements CommandLineRunner {
+
+    @Autowired
+    DeveloperRepository developerRepository;
+
+    @Autowired
+    SkillRepository skillRepository;
 
     public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
-}
-
-@Entity
-class Customer {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
-
-    public Long getId() {
-        return id;
+        SpringApplication.run(DemoApplication.class, args);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Override
+    public void run(String... args) throws Exception {
+        Skill javascript = new Skill("javascript", "Javascript language skill");
+        Skill ruby = new Skill("ruby", "Ruby language skill");
+        Skill emberjs = new Skill("emberjs", "Emberjs framework");
+        Skill angularjs = new Skill("angularjs", "Angularjs framework");
 
-    public String getName() {
-        return name;
-    }
+        skillRepository.save(javascript);
+        skillRepository.save(ruby);
+        skillRepository.save(emberjs);
+        skillRepository.save(angularjs);
 
-    public void setName(String name) {
-        this.name = name;
+        List<Developer> developers = new LinkedList<Developer>();
+        developers.add(new Developer("John", "Smith", "john.smith@example.com",
+                Arrays.asList(new Skill[] { javascript, ruby })));
+        developers.add(new Developer("Mark", "Johnson", "mjohnson@example.com",
+                Arrays.asList(new Skill[] { emberjs, ruby })));
+        developers.add(new Developer("Michael", "Williams", "michael.williams@example.com",
+                Arrays.asList(new Skill[] { angularjs, ruby })));
+        developers.add(new Developer("Fred", "Miller", "f.miller@example.com",
+                Arrays.asList(new Skill[] { emberjs, angularjs, javascript })));
+        developers.add(new Developer("Bob", "Brown", "brown@example.com",
+                Arrays.asList(new Skill[] { emberjs })));
+        developerRepository.save(developers);
     }
-}
-
-@RepositoryRestResource(collectionResourceRel = "customers", path = "customers")
-interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 }
