@@ -1,9 +1,5 @@
 package com.example;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import com.example.domain.Developer;
 import com.example.domain.Skill;
 import com.example.repo.DeveloperRepository;
@@ -12,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -40,15 +40,15 @@ public class DemoApplication implements CommandLineRunner {
 
         List<Developer> developers = new LinkedList<Developer>();
         developers.add(new Developer("John", "Smith", "john.smith@example.com",
-                Arrays.asList(new Skill[] { javascript, ruby })));
+                Arrays.asList(new Skill[]{javascript, ruby})));
         developers.add(new Developer("Mark", "Johnson", "mjohnson@example.com",
-                Arrays.asList(new Skill[] { emberjs, ruby })));
+                Arrays.asList(new Skill[]{emberjs, ruby})));
         developers.add(new Developer("Michael", "Williams", "michael.williams@example.com",
-                Arrays.asList(new Skill[] { angularjs, ruby })));
+                Arrays.asList(new Skill[]{angularjs, ruby})));
         developers.add(new Developer("Fred", "Miller", "f.miller@example.com",
-                Arrays.asList(new Skill[] { emberjs, angularjs, javascript })));
+                Arrays.asList(new Skill[]{emberjs, angularjs, javascript})));
         developers.add(new Developer("Bob", "Brown", "brown@example.com",
-                Arrays.asList(new Skill[] { emberjs })));
+                Arrays.asList(new Skill[]{emberjs})));
         developerRepository.save(developers);
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 public class Developer {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String firstName;
     private String lastName;
@@ -69,7 +69,7 @@ public class Developer {
     }
 
     public boolean hasSkill(Skill skill) {
-        for (Skill containedSkill: getSkills()) {
+        for (Skill containedSkill : getSkills()) {
             if (containedSkill.getId() == skill.getId()) {
                 return true;
             }

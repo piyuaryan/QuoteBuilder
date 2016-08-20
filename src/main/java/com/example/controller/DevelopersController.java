@@ -33,13 +33,13 @@ public class DevelopersController {
         return "developer";
     }
 
-    @RequestMapping(value="/developers",method=RequestMethod.GET)
+    @RequestMapping(value = "/developers", method = RequestMethod.GET)
     public String developersList(Model model) {
         model.addAttribute("developers", repository.findAll());
         return "developers";
     }
 
-    @RequestMapping(value="/developers",method=RequestMethod.POST)
+    @RequestMapping(value = "/developers", method = RequestMethod.POST)
     public String developersAdd(@RequestParam String email,
                                 @RequestParam String firstName, @RequestParam String lastName, Model model) {
         Developer newDeveloper = new Developer();
@@ -53,7 +53,7 @@ public class DevelopersController {
         return "redirect:/developer/" + newDeveloper.getId();
     }
 
-    @RequestMapping(value="/developer/{id}/skills", method= RequestMethod.POST)
+    @RequestMapping(value = "/developer/{id}/skills", method = RequestMethod.POST)
     public String developersAddSkill(@PathVariable Long id, @RequestParam Long skillId, Model model) {
         Skill skill = skillRepository.findOne(skillId);
         Developer developer = repository.findOne(id);

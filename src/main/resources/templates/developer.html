@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Developer</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
 </head>
@@ -13,7 +13,7 @@
             <div class="col-lg-8 col-md-7 col-sm-6">
                 <h1>Developer</h1>
 
-                <form class="form-horizontal" th:action="@{/developer/{id}/skills(id=${developer.id})}" method="post" enctype="multipart/form-data" >
+                <form class="form-horizontal" th:action="@{/developer/{id}/skills(id=${developer.id})}" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Name</label>
@@ -33,7 +33,7 @@
                             <label class="col-lg-2 control-label">Skills</label>
                             <div class="col-lg-10">
                                 <div th:each="skill : ${developer.skills}">
-                                    <span th:text="${skill.label}" /> - <span th:text="${skill.description}" />
+                                    <span th:text="${skill.label}"/> - <span th:text="${skill.description}"/>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,8 @@
                                     <select name="skillId" class="form-control">
                                         <option th:each="skill : ${skills}"
                                                 th:value="${skill.id}"
-                                                th:text="${skill.description}">Skill</option>
+                                                th:text="${skill.description}">Skill
+                                        </option>
                                     </select>
 								<span class="input-group-btn">
 									<button type="submit" class="btn btn-default">Add skill</button>
