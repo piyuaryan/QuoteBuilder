@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.solutionwerk.qb.web.api.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -23,7 +22,6 @@ import java.io.IOException;
  *
  * @author Piyush Ramavat
  */
-@WebAppConfiguration
 public abstract class AbstractControllerTest extends AbstractTest {
 
     protected MockMvc mvc;

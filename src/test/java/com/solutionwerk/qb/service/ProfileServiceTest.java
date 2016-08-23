@@ -41,7 +41,7 @@ public class ProfileServiceTest extends AbstractTest {
         Collection<Profile> list = service.findAll();
 
         Assert.assertNotNull("failure - expected not null", list);
-        Assert.assertEquals("failure - expected list size", 2, list.size());
+        Assert.assertEquals("failure - expected list size", 4, list.size());
 
     }
 
@@ -85,7 +85,7 @@ public class ProfileServiceTest extends AbstractTest {
 
         Collection<Profile> list = service.findAll();
 
-        Assert.assertEquals("failure - expected size", 3, list.size());
+        Assert.assertEquals("failure - expected size", 5, list.size());
 
     }
 
@@ -165,7 +165,7 @@ public class ProfileServiceTest extends AbstractTest {
 
         Collection<Profile> list = service.findAll();
 
-        Assert.assertEquals("failure - expected size", 1, list.size());
+        Assert.assertEquals("failure - expected size", 3, list.size());
 
         Profile deletedEntity = service.findOne(id);
 
