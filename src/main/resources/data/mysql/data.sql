@@ -14,8 +14,8 @@ INSERT INTO Account (referenceId, username, password, enabled, credentialsexpire
 
 INSERT INTO Role (id, code, label, ordinal, effectiveAt, expiresAt, createdAt) VALUES (1, 'ROLE_USER', 'User', 0, '2015-01-01 00:00:00', NULL, NOW());
 INSERT INTO Role (id, code, label, ordinal, effectiveAt, expiresAt, createdAt) VALUES (2, 'ROLE_SALES_REP', 'SalesRep', 1, '2015-01-01 00:00:00', NULL, NOW());
-INSERT INTO Role (id, code, label, ordinal, effectiveAt, expiresAt, createdAt) VALUES (3, 'ROLE_ADMIN', 'Admin', 1, '2015-01-01 00:00:00', NULL, NOW());
-INSERT INTO Role (id, code, label, ordinal, effectiveAt, expiresAt, createdAt) VALUES (4, 'ROLE_SYSADMIN', 'System Admin', 2, '2015-01-01 00:00:00', NULL, NOW());
+INSERT INTO Role (id, code, label, ordinal, effectiveAt, expiresAt, createdAt) VALUES (3, 'ROLE_ADMIN', 'Admin', 2, '2015-01-01 00:00:00', NULL, NOW());
+INSERT INTO Role (id, code, label, ordinal, effectiveAt, expiresAt, createdAt) VALUES (4, 'ROLE_SYSADMIN', 'System Admin', 3, '2015-01-01 00:00:00', NULL, NOW());
 
 INSERT INTO AccountRole (accountId, roleId) SELECT a.id, r.id FROM Account a, Role r WHERE a.username = 'qbUser' and r.id = 1;
 INSERT INTO AccountRole (accountId, roleId) SELECT a.id, r.id FROM Account a, Role r WHERE a.username = 'qbSalesRep' and r.id = 2;
