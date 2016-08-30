@@ -35,8 +35,7 @@ public class AccountUserDetailsService implements UserDetailsService {
     private AccountService accountService;
 
     @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.debug("> loadUserByUsername {}", username);
 
         Account account = accountService.findByUsername(username);

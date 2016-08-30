@@ -72,10 +72,8 @@ public class ProfileServiceBean implements ProfileService {
         // an existing entity if the entity matching the supplied id exists.
         if (profile.getId() != null) {
             // Cannot create Profile with specified ID value
-            LOGGER.error(
-                    "Attempted to create a Profile, but id attribute was not null.");
-            throw new EntityExistsException(
-                    "The id attribute must be null to persist a new entity.");
+            LOGGER.error("Attempted to create a Profile, but id attribute was not null.");
+            throw new EntityExistsException("The id attribute must be null to persist a new entity.");
         }
 
         Profile savedProfile = profileRepository.save(profile);
@@ -100,8 +98,7 @@ public class ProfileServiceBean implements ProfileService {
         Profile profileToUpdate = findOne(profile.getId());
         if (profileToUpdate == null) {
             // Cannot update Profile that hasn't been persisted
-            LOGGER.error(
-                    "Attempted to update a Profile, but the entity does not exist.");
+            LOGGER.error("Attempted to update a Profile, but the entity does not exist.");
             throw new NoResultException("Requested entity not found.");
         }
 

@@ -15,8 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * @author Piyush Ramavat
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(
-        classes = Application.class)
+@SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 public abstract class AbstractTest {
 
@@ -34,9 +33,6 @@ public abstract class AbstractTest {
      * Prepares the test class for execution.
      */
     protected void setUp() {
-
         RequestContext.setUsername(AbstractTest.USERNAME);
-
     }
-
 }

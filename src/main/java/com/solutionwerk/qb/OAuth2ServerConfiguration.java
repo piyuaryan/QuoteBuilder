@@ -42,33 +42,25 @@ public class OAuth2ServerConfiguration {
 
     @Configuration
     @EnableResourceServer
-    protected static class ResourceServerConfiguration extends
-            ResourceServerConfigurerAdapter {
+    protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
-            // @formatter:off
-            resources
-                    .resourceId(RESOURCE_ID);
-            // @formatter:on
+            resources.resourceId(RESOURCE_ID);
         }
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            // @formatter:off
             http
                     .authorizeRequests()
                     .antMatchers("/api/profiles").hasRole("ADMIN")
                     .antMatchers("/").authenticated();
-            // @formatter:on
         }
-
     }
 
     @Configuration
     @EnableAuthorizationServer
-    protected static class AuthorizationServerConfiguration extends
-            AuthorizationServerConfigurerAdapter {
+    protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
         private TokenStore tokenStore = new InMemoryTokenStore();
 
@@ -80,19 +72,15 @@ public class OAuth2ServerConfiguration {
         private AccountUserDetailsService userDetailsService;
 
         @Override
-        public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-                throws Exception {
-            // @formatter:off
+        public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             endpoints
                     .tokenStore(this.tokenStore)
                     .authenticationManager(this.authenticationManager)
                     .userDetailsService(userDetailsService);
-            // @formatter:on
         }
 
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-            // @formatter:off
             clients
                     .inMemory()
                     .withClient("qbClientId")
@@ -101,7 +89,6 @@ public class OAuth2ServerConfiguration {
                     .scopes("read", "write")
                     .resourceIds(RESOURCE_ID)
                     .secret("123456");
-            // @formatter:on
         }
 
         @Bean
@@ -112,6 +99,5 @@ public class OAuth2ServerConfiguration {
             tokenServices.setTokenStore(this.tokenStore);
             return tokenServices;
         }
-
     }
 }

@@ -37,61 +37,49 @@ public class ProfileServiceTest extends AbstractTest {
 
     @Test
     public void testFindAll() {
-
         Collection<Profile> list = service.findAll();
 
         Assert.assertNotNull("failure - expected not null", list);
         Assert.assertEquals("failure - expected list size", 4, list.size());
-
     }
 
     @Test
     public void testFindOne() {
-
-        Long id = new Long(1);
+        Long id = 1L;
 
         Profile entity = service.findOne(id);
 
         Assert.assertNotNull("failure - expected not null", entity);
-        Assert.assertEquals("failure - expected id attribute match", id,
-                entity.getId());
-
+        Assert.assertEquals("failure - expected id attribute match", id, entity.getId());
     }
 
     @Test
     public void testFindOneNotFound() {
-
         Long id = Long.MAX_VALUE;
 
         Profile entity = service.findOne(id);
 
         Assert.assertNull("failure - expected null", entity);
-
     }
 
     @Test
     public void testCreate() {
-
         Profile entity = new Profile();
         entity.setText("test");
 
         Profile createdEntity = service.create(entity);
 
         Assert.assertNotNull("failure - expected not null", createdEntity);
-        Assert.assertNotNull("failure - expected id attribute not null",
-                createdEntity.getId());
-        Assert.assertEquals("failure - expected text attribute match", "test",
-                createdEntity.getText());
+        Assert.assertNotNull("failure - expected id attribute not null", createdEntity.getId());
+        Assert.assertEquals("failure - expected text attribute match", "test", createdEntity.getText());
 
         Collection<Profile> list = service.findAll();
 
         Assert.assertEquals("failure - expected size", 5, list.size());
-
     }
 
     @Test
     public void testCreateWithId() {
-
         Exception exception = null;
 
         Profile entity = new Profile();
@@ -105,15 +93,11 @@ public class ProfileServiceTest extends AbstractTest {
         }
 
         Assert.assertNotNull("failure - expected exception", exception);
-        Assert.assertTrue("failure - expected EntityExistsException",
-                exception instanceof EntityExistsException);
-
     }
 
     @Test
     public void testUpdate() {
-
-        Long id = new Long(1);
+        Long id = 1L;
 
         Profile entity = service.findOne(id);
 
@@ -124,16 +108,12 @@ public class ProfileServiceTest extends AbstractTest {
         Profile updatedEntity = service.update(entity);
 
         Assert.assertNotNull("failure - expected not null", updatedEntity);
-        Assert.assertEquals("failure - expected id attribute match", id,
-                updatedEntity.getId());
-        Assert.assertEquals("failure - expected text attribute match",
-                updatedText, updatedEntity.getText());
-
+        Assert.assertEquals("failure - expected id attribute match", id, updatedEntity.getId());
+        Assert.assertEquals("failure - expected text attribute match", updatedText, updatedEntity.getText());
     }
 
     @Test
     public void testUpdateNotFound() {
-
         Exception exception = null;
 
         Profile entity = new Profile();
@@ -147,15 +127,11 @@ public class ProfileServiceTest extends AbstractTest {
         }
 
         Assert.assertNotNull("failure - expected exception", exception);
-        Assert.assertTrue("failure - expected NoResultException",
-                exception instanceof NoResultException);
-
     }
 
     @Test
     public void testDelete() {
-
-        Long id = new Long(1);
+        Long id = 1L;
 
         Profile entity = service.findOne(id);
 
@@ -170,7 +146,5 @@ public class ProfileServiceTest extends AbstractTest {
         Profile deletedEntity = service.findOne(id);
 
         Assert.assertNull("failure - expected null", deletedEntity);
-
     }
-
 }

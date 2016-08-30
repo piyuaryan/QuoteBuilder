@@ -53,6 +53,7 @@ public class AccountAuthenticationProvider extends AbstractUserDetailsAuthentica
             throw new BadCredentialsException("Credentials may not be null.");
         }
 
+        //TODO: Send Encrypted password and Match
         if (!passwordEncoder.matches((String) token.getCredentials(), userDetails.getPassword())) {
             logger.error("Invalid credentials.");
             throw new BadCredentialsException("Invalid credentials.");

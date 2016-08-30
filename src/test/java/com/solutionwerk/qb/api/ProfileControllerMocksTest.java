@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -62,7 +61,6 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
 
     @Test
     public void testGetProfiles() throws Exception {
-
         // Create some test data
         Collection<Profile> list = getEntityListStubData();
 
@@ -84,17 +82,14 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
 
         // Perform standard JUnit assertions on the response
         Assert.assertEquals("failure - expected HTTP status 200", 200, status);
-        Assert.assertTrue(
-                "failure - expected HTTP response body to have a value",
-                content.trim().length() > 0);
-
+        Assert.assertTrue("failure - expected HTTP response body to have a value", content.trim().length() > 0);
     }
+
 
     @Test
     public void testGetProfile() throws Exception {
-
         // Create some test data
-        Long id = new Long(1);
+        Long id = 1L;
         Profile entity = getEntityStubData();
 
         // Stub the ProfileService.findOne method return value
@@ -115,14 +110,11 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
 
         // Perform standard JUnit assertions on the test results
         Assert.assertEquals("failure - expected HTTP status 200", 200, status);
-        Assert.assertTrue(
-                "failure - expected HTTP response body to have a value",
-                content.trim().length() > 0);
+        Assert.assertTrue("failure - expected HTTP response body to have a value", content.trim().length() > 0);
     }
 
     @Test
     public void testGetProfileNotFound() throws Exception {
-
         // Create some test data
         Long id = Long.MAX_VALUE;
 
@@ -144,14 +136,11 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
 
         // Perform standard JUnit assertions on the test results
         Assert.assertEquals("failure - expected HTTP status 404", 404, status);
-        Assert.assertTrue("failure - expected HTTP response body to be empty",
-                content.trim().length() == 0);
-
+        Assert.assertTrue("failure - expected HTTP response body to be empty", content.trim().length() == 0);
     }
 
     @Test
     public void testCreateProfile() throws Exception {
-
         // Create some test data
         Profile entity = getEntityStubData();
 
@@ -177,27 +166,21 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
 
         // Perform standard JUnit assertions on the test results
         Assert.assertEquals("failure - expected HTTP status 201", 201, status);
-        Assert.assertTrue(
-                "failure - expected HTTP response body to have a value",
-                content.trim().length() > 0);
+        Assert.assertTrue("failure - expected HTTP response body to have a value", content.trim().length() > 0);
 
         Profile createdEntity = super.mapFromJson(content, Profile.class);
 
-        Assert.assertNotNull("failure - expected entity not null",
-                createdEntity);
-        Assert.assertNotNull("failure - expected id attribute not null",
-                createdEntity.getId());
-        Assert.assertEquals("failure - expected text attribute match",
-                entity.getText(), createdEntity.getText());
+        Assert.assertNotNull("failure - expected entity not null", createdEntity);
+        Assert.assertNotNull("failure - expected id attribute not null", createdEntity.getId());
+        Assert.assertEquals("failure - expected text attribute match", entity.getText(), createdEntity.getText());
     }
 
     @Test
     public void testUpdateProfile() throws Exception {
-
         // Create some test data
         Profile entity = getEntityStubData();
         entity.setText(entity.getText() + " test");
-        Long id = new Long(1);
+        Long id = 1L;
 
         // Stub the ProfileService.update method return value
         when(profileService.update(any(Profile.class))).thenReturn(entity);
@@ -221,26 +204,19 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
 
         // Perform standard JUnit assertions on the test results
         Assert.assertEquals("failure - expected HTTP status 200", 200, status);
-        Assert.assertTrue(
-                "failure - expected HTTP response body to have a value",
-                content.trim().length() > 0);
+        Assert.assertTrue("failure - expected HTTP response body to have a value", content.trim().length() > 0);
 
         Profile updatedEntity = super.mapFromJson(content, Profile.class);
 
-        Assert.assertNotNull("failure - expected entity not null",
-                updatedEntity);
-        Assert.assertEquals("failure - expected id attribute unchanged",
-                entity.getId(), updatedEntity.getId());
-        Assert.assertEquals("failure - expected text attribute match",
-                entity.getText(), updatedEntity.getText());
-
+        Assert.assertNotNull("failure - expected entity not null", updatedEntity);
+        Assert.assertEquals("failure - expected id attribute unchanged", entity.getId(), updatedEntity.getId());
+        Assert.assertEquals("failure - expected text attribute match", entity.getText(), updatedEntity.getText());
     }
 
     @Test
     public void testDeleteProfile() throws Exception {
-
         // Create some test data
-        Long id = new Long(1);
+        Long id = 1L;
 
         // Perform the behavior being tested
         String uri = "/api/profiles/{id}";
@@ -257,13 +233,11 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
 
         // Perform standard JUnit assertions on the test results
         Assert.assertEquals("failure - expected HTTP status 204", 204, status);
-        Assert.assertTrue("failure - expected HTTP response body to be empty",
-                content.trim().length() == 0);
-
+        Assert.assertTrue("failure - expected HTTP response body to be empty", content.trim().length() == 0);
     }
 
     private Collection<Profile> getEntityListStubData() {
-        Collection<Profile> list = new ArrayList<Profile>();
+        Collection<Profile> list = new ArrayList<>();
         list.add(getEntityStubData());
         return list;
     }
@@ -274,5 +248,4 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
         entity.setText("hello");
         return entity;
     }
-
 }
