@@ -43,7 +43,7 @@ public class ProfileControllerTest extends AbstractControllerTest {
                 accessToken = getAccessToken("qbAdmin", "QuoteBuilder@1");
             }
         } catch (Exception e) {
-            logger.error("Failed to get Access Token.");
+            LOGGER.error("Failed to get Access Token.");
         }
     }
 
@@ -58,7 +58,7 @@ public class ProfileControllerTest extends AbstractControllerTest {
             TestError error = super.mapFromJson(result.getResponse().getContentAsString(), TestError.class);
             Assert.assertEquals("unauthorized", error.getError());
         } catch (Exception e) {
-            logger.error("Couldn't parse Error JSON");
+            LOGGER.error("Couldn't parse Error JSON");
         }
     }
 
@@ -78,7 +78,7 @@ public class ProfileControllerTest extends AbstractControllerTest {
             TestError error = super.mapFromJson(result.getResponse().getContentAsString(), TestError.class);
             Assert.assertEquals("access_denied", error.getError());
         } catch (Exception e) {
-            logger.error("Couldn't parse Error JSON");
+            LOGGER.error("Couldn't parse Error JSON");
         }
     }
 

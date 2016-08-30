@@ -27,7 +27,7 @@ public abstract class AbstractTest {
     /**
      * The Logger instance for all classes in the unit test framework.
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Prepares the test class for execution.

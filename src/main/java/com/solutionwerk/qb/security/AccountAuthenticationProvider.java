@@ -28,7 +28,7 @@ public class AccountAuthenticationProvider extends AbstractUserDetailsAuthentica
     /**
      * The Logger for this class.
      */
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     /**
      * A Spring Security UserDetailsService implementation based upon the
@@ -46,32 +46,32 @@ public class AccountAuthenticationProvider extends AbstractUserDetailsAuthentica
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken token)
             throws AuthenticationException {
-        logger.debug("> additionalAuthenticationChecks");
+        LOGGER.debug("> additionalAuthenticationChecks");
 
         if (token.getCredentials() == null || userDetails.getPassword() == null) {
-            logger.error("Credentials NULL.");
+            LOGGER.error("Credentials NULL.");
             throw new BadCredentialsException("Credentials may not be null.");
         }
 
         //TODO: Send Encrypted password and Match
         if (!passwordEncoder.matches((String) token.getCredentials(), userDetails.getPassword())) {
-            logger.error("Invalid credentials.");
+            LOGGER.error("Invalid credentials.");
             throw new BadCredentialsException("Invalid credentials.");
         }
 
         RequestContext.setUsername(userDetails.getUsername());
 
-        logger.debug("< additionalAuthenticationChecks");
+        LOGGER.debug("< additionalAuthenticationChecks");
     }
 
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken token)
             throws AuthenticationException {
-        logger.debug("> retrieveUser");
+        LOGGER.debug("> retrieveUser");
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-        logger.debug("< retrieveUser");
+        LOGGER.debug("< retrieveUser");
         return userDetails;
     }
 

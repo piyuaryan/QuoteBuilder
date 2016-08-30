@@ -28,16 +28,16 @@ public class RequestContextInitializationFilter extends GenericFilterBean {
     /**
      * The Logger for this class.
      */
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        logger.info("> doFilter");
+        LOGGER.info("> doFilter");
 
         RequestContext.init();
 
         chain.doFilter(req, resp);
-        logger.info("< doFilter");
+        LOGGER.info("< doFilter");
     }
 
 }

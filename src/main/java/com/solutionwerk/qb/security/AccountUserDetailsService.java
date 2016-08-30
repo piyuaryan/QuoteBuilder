@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class AccountUserDetailsService implements UserDetailsService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     /**
      * The AccountService business service.
@@ -36,7 +36,7 @@ public class AccountUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.debug("> loadUserByUsername {}", username);
+        LOGGER.debug("> loadUserByUsername {}", username);
 
         Account account = accountService.findByUsername(username);
         if (account == null) {
@@ -55,7 +55,7 @@ public class AccountUserDetailsService implements UserDetailsService {
         User userDetails = new User(account.getUsername(), account.getPassword(), account.isEnabled(), !account.isExpired(), !account.isCredentialsExpired(),
                 !account.isLocked(), grantedAuthorities);
 
-        logger.debug("< loadUserByUsername {}", username);
+        LOGGER.debug("< loadUserByUsername {}", username);
         return userDetails;
     }
 }

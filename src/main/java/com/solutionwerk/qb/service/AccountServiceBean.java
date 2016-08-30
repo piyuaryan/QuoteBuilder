@@ -19,7 +19,7 @@ public class AccountServiceBean implements AccountService {
     /**
      * The Logger for this class.
      */
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     /**
      * The Spring Data repository for Account entities.
@@ -29,10 +29,10 @@ public class AccountServiceBean implements AccountService {
 
     @Override
     public Account findByUsername(String username) {
-        logger.info("> findByUsername");
+        LOGGER.info("> findByUsername");
         Account account = accountRepository.findByUsername(username);
 
-        logger.info("< findByUsername");
+        LOGGER.info("< findByUsername");
         return account;
     }
 
