@@ -32,14 +32,18 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class OAuth2ServerConfiguration {
 
     private static final String RESOURCE_ID = "QBRestService";
 
+    /**
+     * This is resource Server. i.e. Our API server that would be accessed using tokens and URLs.
+     */
     @Configuration
     @EnableResourceServer
     protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
@@ -58,11 +62,22 @@ public class OAuth2ServerConfiguration {
         }
     }
 
+    /**
+     * This is Authorization Bean (coz it extends ASConfigAdapter Which intern implements AuthServerConfigurer.
+     * This would use
+     * . our Custom AuthManager to authenticate using uName/Password
+     * . our Custom AccountUSerDetailsService to find a user by uName.
+     * <p/>
+     * This would generate, validate and refresh the tokens
+     */
     @Configuration
     @EnableAuthorizationServer
     protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-        private TokenStore tokenStore = new InMemoryTokenStore();
+        @Autowired
+        DataSource dataSource;
+
+        private JdbcTokenStore tokenStore;
 
         @Autowired
         @Qualifier("authenticationManagerBean")
@@ -74,7 +89,7 @@ public class OAuth2ServerConfiguration {
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             endpoints
-                    .tokenStore(this.tokenStore)
+                    .tokenStore(tokenStore())
                     .authenticationManager(this.authenticationManager)
                     .userDetailsService(userDetailsService);
         }
@@ -84,7 +99,7 @@ public class OAuth2ServerConfiguration {
             clients
                     .inMemory()
                     .withClient("qbClientId")
-                    .authorizedGrantTypes("password", "refresh_token")
+                    .authorizedGrantTypes("password", "refresh_token")  // for password grant Type we need -> AuthenticationManager and for refresh_token -> UserDetailsService
                     .authorities("USER")
                     .scopes("read", "write")
                     .resourceIds(RESOURCE_ID)
@@ -96,8 +111,16 @@ public class OAuth2ServerConfiguration {
         public DefaultTokenServices tokenServices() {
             DefaultTokenServices tokenServices = new DefaultTokenServices();
             tokenServices.setSupportRefreshToken(true);
-            tokenServices.setTokenStore(this.tokenStore);
+            tokenServices.setTokenStore(tokenStore());
             return tokenServices;
+        }
+
+        @Bean
+        public JdbcTokenStore tokenStore() {
+            if (this.tokenStore == null) {
+                this.tokenStore = new JdbcTokenStore(dataSource);
+            }
+            return this.tokenStore;
         }
     }
 }
