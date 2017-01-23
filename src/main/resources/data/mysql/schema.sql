@@ -3,9 +3,9 @@
  * Create the database schema for the application.
  */
 
-DROP TABLE IF EXISTS `Profile`;
+-- DROP TABLE IF EXISTS `Profile`;
 
-CREATE TABLE `Profile` (
+CREATE TABLE IF NOT EXISTS `Profile` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `referenceId` varchar(255) NOT NULL,
   `text` varchar(100) NOT NULL,
@@ -19,11 +19,11 @@ CREATE TABLE `Profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `AccountRole`;
-DROP TABLE IF EXISTS `Account`;
-DROP TABLE IF EXISTS `Role`;
+-- DROP TABLE IF EXISTS `AccountRole`;
+-- DROP TABLE IF EXISTS `Account`;
+-- DROP TABLE IF EXISTS `Role`;
 
-CREATE TABLE `Account` (
+CREATE TABLE IF NOT EXISTS `Account` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `referenceId` varchar(255) NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `Account` (
   CONSTRAINT `UQ_Account_Username` UNIQUE (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `Role` (
+CREATE TABLE IF NOT EXISTS `Role` (
   `id` bigint(20) unsigned NOT NULL,
   `code` varchar(50) NOT NULL,
   `label` varchar(100) NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE `Role` (
   CONSTRAINT `UQ_Role_Code` UNIQUE (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `AccountRole` (
+CREATE TABLE IF NOT EXISTS `AccountRole` (
   `accountId` bigint(20) unsigned NOT NULL,
   `roleId` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`accountId`, `roleId`),

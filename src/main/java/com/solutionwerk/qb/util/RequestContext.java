@@ -21,7 +21,7 @@ public class RequestContext {
     /**
      * ThreadLocal storage of username Strings.
      */
-    private static ThreadLocal<String> userNames = new ThreadLocal<>();
+    private static ThreadLocal<String> userName = new ThreadLocal<>();
 
     private RequestContext() {
 
@@ -33,7 +33,7 @@ public class RequestContext {
      * @return A String username.
      */
     public static String getUsername() {
-        return userNames.get();
+        return userName.get();
     }
 
     /**
@@ -42,7 +42,7 @@ public class RequestContext {
      * @param userName A String userName.
      */
     public static void setUsername(String userName) {
-        userNames.set(userName);
+        RequestContext.userName.set(userName);
         LOGGER.debug("RequestContext added userName {} to current thread", userName);
     }
 
@@ -50,7 +50,7 @@ public class RequestContext {
      * Initialize the ThreadLocal attributes for the current thread.
      */
     public static void init() {
-        userNames.set(null);
+        userName.set(null);
     }
 
 }
