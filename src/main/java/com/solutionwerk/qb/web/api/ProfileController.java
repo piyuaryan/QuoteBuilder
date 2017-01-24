@@ -129,7 +129,7 @@ public class ProfileController extends BaseController {
      * comment.
      */
     @RequestMapping(
-            value = "/api/profiles/{id}",
+            value = "/api/profiles",
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

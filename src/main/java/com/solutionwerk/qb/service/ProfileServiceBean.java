@@ -102,7 +102,8 @@ public class ProfileServiceBean implements ProfileService {
             throw new NoResultException("Requested entity not found.");
         }
 
-        profileToUpdate.setText(profile.getText());
+        // TODO: try to save object in argument directly. Verify whether all updated info is changed and null values are not replaced in DB
+        profileToUpdate.setName(profile.getName());
         Profile updatedProfile = profileRepository.save(profileToUpdate);
 
         LOGGER.info("< update id:{}", profile.getId());

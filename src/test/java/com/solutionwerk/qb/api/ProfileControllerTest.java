@@ -135,7 +135,7 @@ public class ProfileControllerTest extends AbstractControllerTest {
     public void testCreateProfile() throws Exception {
         String uri = "/api/profiles";
         Profile profile = new Profile();
-        profile.setText("test");
+        profile.setName("test");
         String inputJson = super.mapToJson(profile);
 
         MvcResult result = mvc
@@ -155,7 +155,7 @@ public class ProfileControllerTest extends AbstractControllerTest {
 
         Assert.assertNotNull("failure - expected profile not null", createdProfile);
         Assert.assertNotNull("failure - expected profile.id not null", createdProfile.getId());
-        Assert.assertEquals("failure - expected profile.text match", "test", createdProfile.getText());
+        Assert.assertEquals("failure - expected profile.text match", "test", createdProfile.getName());
     }
 
     @Test
@@ -163,8 +163,8 @@ public class ProfileControllerTest extends AbstractControllerTest {
         String uri = "/api/profiles/{id}";
         Long id = 1L;
         Profile profile = profileService.findOne(id);
-        String updatedText = profile.getText() + " test";
-        profile.setText(updatedText);
+        String updatedText = profile.getName() + " test";
+        profile.setName(updatedText);
         String inputJson = super.mapToJson(profile);
 
         MvcResult result = mvc
@@ -184,7 +184,7 @@ public class ProfileControllerTest extends AbstractControllerTest {
 
         Assert.assertNotNull("failure - expected profile not null", updatedProfile);
         Assert.assertEquals("failure - expected profile.id unchanged", profile.getId(), updatedProfile.getId());
-        Assert.assertEquals("failure - expected updated profile text match", updatedText, updatedProfile.getText());
+        Assert.assertEquals("failure - expected updated profile text match", updatedText, updatedProfile.getName());
     }
 
     @Test

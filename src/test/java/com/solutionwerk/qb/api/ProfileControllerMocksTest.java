@@ -172,14 +172,14 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
 
         Assert.assertNotNull("failure - expected entity not null", createdEntity);
         Assert.assertNotNull("failure - expected id attribute not null", createdEntity.getId());
-        Assert.assertEquals("failure - expected text attribute match", entity.getText(), createdEntity.getText());
+        Assert.assertEquals("failure - expected text attribute match", entity.getName(), createdEntity.getName());
     }
 
     @Test
     public void testUpdateProfile() throws Exception {
         // Create some test data
         Profile entity = getEntityStubData();
-        entity.setText(entity.getText() + " test");
+        entity.setName(entity.getName() + " test");
         Long id = 1L;
 
         // Stub the ProfileService.update method return value
@@ -210,7 +210,7 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
 
         Assert.assertNotNull("failure - expected entity not null", updatedEntity);
         Assert.assertEquals("failure - expected id attribute unchanged", entity.getId(), updatedEntity.getId());
-        Assert.assertEquals("failure - expected text attribute match", entity.getText(), updatedEntity.getText());
+        Assert.assertEquals("failure - expected text attribute match", entity.getName(), updatedEntity.getName());
     }
 
     @Test
@@ -245,7 +245,7 @@ public class ProfileControllerMocksTest extends AbstractControllerTest {
     private Profile getEntityStubData() {
         Profile entity = new Profile();
         entity.setId(1L);
-        entity.setText("hello");
+        entity.setName("hello");
         return entity;
     }
 }

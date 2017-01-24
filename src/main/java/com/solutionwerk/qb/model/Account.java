@@ -2,6 +2,7 @@ package com.solutionwerk.qb.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,6 +47,16 @@ public class Account extends TransactionalEntity {
                     name = "roleId",
                     referencedColumnName = "id"))
     private Set<Role> roles;
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "AccountProfile",
+            joinColumns = @JoinColumn(name = "accountId",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "profileId", referencedColumnName = "id"))
+    private List<Profile> profiles;
 
     public Account() {
 
@@ -107,4 +118,11 @@ public class Account extends TransactionalEntity {
         this.roles = roles;
     }
 
+    public List<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
+    }
 }

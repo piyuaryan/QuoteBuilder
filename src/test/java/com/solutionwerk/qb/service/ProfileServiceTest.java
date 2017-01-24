@@ -65,13 +65,13 @@ public class ProfileServiceTest extends AbstractTest {
     @Test
     public void testCreate() {
         Profile entity = new Profile();
-        entity.setText("test");
+        entity.setName("test");
 
         Profile createdEntity = service.create(entity);
 
         Assert.assertNotNull("failure - expected not null", createdEntity);
         Assert.assertNotNull("failure - expected id attribute not null", createdEntity.getId());
-        Assert.assertEquals("failure - expected text attribute match", "test", createdEntity.getText());
+        Assert.assertEquals("failure - expected text attribute match", "test", createdEntity.getName());
 
         Collection<Profile> list = service.findAll();
 
@@ -84,7 +84,7 @@ public class ProfileServiceTest extends AbstractTest {
 
         Profile entity = new Profile();
         entity.setId(Long.MAX_VALUE);
-        entity.setText("test");
+        entity.setName("test");
 
         try {
             service.create(entity);
@@ -103,13 +103,13 @@ public class ProfileServiceTest extends AbstractTest {
 
         Assert.assertNotNull("failure - expected not null", entity);
 
-        String updatedText = entity.getText() + " test";
-        entity.setText(updatedText);
+        String updatedText = entity.getName() + " test";
+        entity.setName(updatedText);
         Profile updatedEntity = service.update(entity);
 
         Assert.assertNotNull("failure - expected not null", updatedEntity);
         Assert.assertEquals("failure - expected id attribute match", id, updatedEntity.getId());
-        Assert.assertEquals("failure - expected text attribute match", updatedText, updatedEntity.getText());
+        Assert.assertEquals("failure - expected text attribute match", updatedText, updatedEntity.getName());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class ProfileServiceTest extends AbstractTest {
 
         Profile entity = new Profile();
         entity.setId(Long.MAX_VALUE);
-        entity.setText("test");
+        entity.setName("test");
 
         try {
             service.update(entity);
