@@ -43,7 +43,7 @@ public class Application {
     @Bean
     public CacheManager cacheManager() {
 
-        return new GuavaCacheManager("profiles");
+        return new GuavaCacheManager("accounts", "profiles");
     }
 
 }
