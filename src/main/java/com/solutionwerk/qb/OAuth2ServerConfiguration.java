@@ -57,6 +57,7 @@ public class OAuth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
+                    .antMatchers("/api/accounts").hasRole("ADMIN")
                     .antMatchers("/api/profiles").hasRole("ADMIN")
                     .antMatchers("/").authenticated();
         }
