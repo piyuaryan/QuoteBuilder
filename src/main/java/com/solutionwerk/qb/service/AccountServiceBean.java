@@ -161,27 +161,33 @@ public class AccountServiceBean implements AccountService {
             throw new EntityExistsException("The id attribute must be null to persist a new entity.");
         }
 
-        Account createdAccount = accountRepository.saveAndFlush(user.getAccount());
+        Account account = accountRepository.saveAndFlush(user.getAccount());
 
+        account = updateUserRoleAndProfile(user, account);
+
+        return account;
+    }
+
+    private Account updateUserRoleAndProfile(User user, Account account) {
         boolean update = false;
         if (user.getRoles() != null) {
             List<Role> userRoles = new ArrayList<>(user.getRoles().size());
             userRoles.addAll(user.getRoles().stream().map(role -> roleRepository.findByCodeAndEffective(role.getCode(), new DateTime())).collect(Collectors.toList()));
-            createdAccount.setRoles(userRoles);
+            account.setRoles(userRoles);
             update = true;
         }
 
         if (user.getProfile() != null) {
             Profile createdProfile = profileRepository.save(user.getProfile());
-            createdAccount.setProfile(createdProfile);
+            account.setProfile(createdProfile);
             update = true;
         }
 
         if (update) {
-            accountRepository.save(createdAccount);
+            account = accountRepository.save(account);      // Saving account because if Profile or Role didn't exist earlier it would create linkages now.
         }
 
-        return createdAccount;
+        return account;
     }
 
     @Override
@@ -204,10 +210,9 @@ public class AccountServiceBean implements AccountService {
             throw new NoResultException("Requested entity not found.");
         }
 
-        // TODO: Try to save Account passed in parameter directly. keep the check and ensure other dependent entities like Role and Profiles are intact or updated according to new one.
-        accountToUpdate.setUsername(user.getAccount().getUsername());
-        // TODO: Set Role and Update Pofile values as well
-        return accountRepository.save(accountToUpdate);
+        accountToUpdate = updateUserRoleAndProfile(user, accountToUpdate);
+
+        return accountToUpdate;
     }
 
     @Override

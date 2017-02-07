@@ -58,7 +58,7 @@ public class AccountController extends BaseController {
      * @return A ResponseEntity containing a single Account object, if found, and a HTTP status code as described in the method comment.
      */
     @RequestMapping(
-            value = "/api/accounts/{username}",
+            value = "/api/accounts/byUserName/{username}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Account> getAccount(@PathVariable("username") String username) {
@@ -84,7 +84,7 @@ public class AccountController extends BaseController {
      * @return A ResponseEntity containing a single Account object, if found, and a HTTP status code as described in the method comment.
      */
     @RequestMapping(
-            value = "/api/accounts/{id}",
+            value = "/api/accounts/byId/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Account> getAccount(@PathVariable("id") Long id) {
@@ -211,17 +211,54 @@ public class AccountController extends BaseController {
      * comment.
      */
     @RequestMapping(
-            value = "/api/accounts/createUser",
+            value = "/api/accounts/user",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Account> createUser(
             @RequestBody User user) {
-        LOGGER.info("> createAccount");
+        LOGGER.info("> createUser");
 
         Account savedAccount = accountService.create(user);
 
-        LOGGER.info("< createAccount");
+        LOGGER.info("< createUser");
         return new ResponseEntity<>(savedAccount, HttpStatus.CREATED);
     }
+
+    /**
+     * Web service endpoint to update a User Account. The HTTP request
+     * body is expected to contain a User object in JSON format with Account, Roles, Profile elements.
+     * The Account is updated in the data repository.
+     * <p/>
+     * If updated successfully, the persisted Account is returned as JSON with
+     * HTTP status 200.
+     * <p/>
+     * If not found, the service returns an empty response body and HTTP status
+     * 404.
+     * <p/>
+     * If not updated successfully, the service returns an empty response body
+     * with HTTP status 500.
+     *
+     * @param user The Account object to be updated.
+     * @return A ResponseEntity containing a single Account object, if updated
+     * successfully, and a HTTP status code as described in the method
+     * comment.
+     */
+    @RequestMapping(
+            value = "/api/accounts/user",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Account> updateUser(@RequestBody User user) {
+        LOGGER.info("> updateUser");
+
+        Account updatedAccount = accountService.update(user);
+        if (updatedAccount == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        LOGGER.info("< updateUser");
+        return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+    }
+
 }
