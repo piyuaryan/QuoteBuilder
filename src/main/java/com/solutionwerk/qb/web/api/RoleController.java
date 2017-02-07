@@ -2,6 +2,7 @@ package com.solutionwerk.qb.web.api;
 
 import com.solutionwerk.qb.model.Role;
 import com.solutionwerk.qb.repository.RoleRepository;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
-import java.util.Date;
 
 /**
  * The RoleController class is a RESTful web service controller. The
@@ -46,7 +46,7 @@ public class RoleController extends BaseController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<Role>> getRoles() {
 
-        Collection<Role> roles = roleRepository.findAllEffective(new Date());
+        Collection<Role> roles = roleRepository.findAllEffective(new DateTime());
 
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }

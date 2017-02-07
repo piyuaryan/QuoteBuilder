@@ -1,6 +1,7 @@
 package com.solutionwerk.qb.repository;
 
 import com.solutionwerk.qb.model.Role;
+import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -45,7 +46,7 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
      * @return A Collection of Role entity model classes.
      */
     @Query("SELECT r FROM Role r WHERE r.effectiveAt <= :effectiveAt AND (r.expiresAt IS NULL OR r.expiresAt > :effectiveAt) ORDER BY r.ordinal ASC")
-    Collection<Role> findAllEffective(@Param("effectiveAt") Date effectiveAt);
+    Collection<Role> findAllEffective(@Param("effectiveAt") DateTime effectiveAt);
 
     /**
      * Query for a single Role entity by the code, effectiveAt, and expiresAt
@@ -72,6 +73,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
      * @return A Role object or <code>null</code> if not found.
      */
     @Query("SELECT r FROM Role r WHERE r.code = :code AND r.effectiveAt <= :effectiveAt AND (r.expiresAt IS NULL OR r.expiresAt > :effectiveAt)")
-    Role findByCodeAndEffective(@Param("code") String code, @Param("effectiveAt") Date effectiveAt);
+    Role findByCodeAndEffective(@Param("code") String code, @Param("effectiveAt") DateTime effectiveAt);
 
 }

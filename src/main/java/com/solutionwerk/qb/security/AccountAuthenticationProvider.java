@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +43,12 @@ public class AccountAuthenticationProvider extends AbstractUserDetailsAuthentica
      */
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    // TODO: Override and modify this method to customize token and validate the token later in interceptor.
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        return super.authenticate(authentication);
+    }
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken token)

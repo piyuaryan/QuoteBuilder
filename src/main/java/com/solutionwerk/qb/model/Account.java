@@ -3,7 +3,6 @@ package com.solutionwerk.qb.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The Account class is an entity model object. An Account describes the
@@ -35,9 +34,7 @@ public class Account extends TransactionalEntity {
     @NotNull
     private boolean locked = false;
 
-    @ManyToMany(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "AccountRole",
             joinColumns = @JoinColumn(
@@ -46,9 +43,9 @@ public class Account extends TransactionalEntity {
             inverseJoinColumns = @JoinColumn(
                     name = "roleId",
                     referencedColumnName = "id"))
-    private Set<Role> roles;
+    private List<Role> roles;
 
-    @OneToMany(
+    @OneToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @JoinTable(
@@ -56,7 +53,7 @@ public class Account extends TransactionalEntity {
             joinColumns = @JoinColumn(name = "accountId",
                     referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "profileId", referencedColumnName = "id"))
-    private List<Profile> profiles;
+    private Profile profile;
 
     public Account() {
 
@@ -110,19 +107,19 @@ public class Account extends TransactionalEntity {
         this.locked = locked;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
-    public List<Profile> getProfiles() {
-        return profiles;
+    public Profile getProfile() {
+        return profile;
     }
 
-    public void setProfiles(List<Profile> profiles) {
-        this.profiles = profiles;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }

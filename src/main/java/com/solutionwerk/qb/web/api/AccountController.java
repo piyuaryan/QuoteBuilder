@@ -1,6 +1,7 @@
 package com.solutionwerk.qb.web.api;
 
 import com.solutionwerk.qb.model.Account;
+import com.solutionwerk.qb.model.network.User;
 import com.solutionwerk.qb.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -193,4 +194,34 @@ public class AccountController extends BaseController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * Web service endpoint to create a User with Account and Profile entity with Role. The HTTP request
+     * body is expected to contain a Account object in JSON format. The
+     * Account is persisted in the data repository.
+     * <p/>
+     * If created successfully, the persisted Account is returned as JSON with
+     * HTTP status 201.
+     * <p/>
+     * If not created successfully, the service returns an empty response body
+     * with HTTP status 500.
+     *
+     * @param user The User object with Account, Roles and Profile object to be created.
+     * @return A ResponseEntity containing a single Account object, if created
+     * successfully, and a HTTP status code as described in the method
+     * comment.
+     */
+    @RequestMapping(
+            value = "/api/accounts/createUser",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Account> createUser(
+            @RequestBody User user) {
+        LOGGER.info("> createAccount");
+
+        Account savedAccount = accountService.create(user);
+
+        LOGGER.info("< createAccount");
+        return new ResponseEntity<>(savedAccount, HttpStatus.CREATED);
+    }
 }

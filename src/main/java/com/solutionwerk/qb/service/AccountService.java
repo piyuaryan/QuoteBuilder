@@ -2,6 +2,7 @@ package com.solutionwerk.qb.service;
 
 
 import com.solutionwerk.qb.model.Account;
+import com.solutionwerk.qb.model.network.User;
 
 import java.util.Collection;
 
@@ -62,6 +63,22 @@ public interface AccountService {
      * @param id A Long primary key identifier.
      */
     void delete(Long id);
+
+    /**
+     * Persists a Account, Profile entity in the data store.
+     *
+     * @param user A User object with Account, Role and Profile entity objects to be persisted.
+     * @return The persisted Account entity.
+     */
+    Account create(User user);
+
+    /**
+     * Updates a previously persisted Account, Profile entity in the data store.
+     *
+     * @param user A User object with Account, Role and Profile entity objects to be updated.
+     * @return The updated Account entity.
+     */
+    Account update(User user);
 
     /**
      * Evicts all members of the "profiles" cache.
