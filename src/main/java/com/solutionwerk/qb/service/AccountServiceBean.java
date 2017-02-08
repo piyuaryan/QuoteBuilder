@@ -8,6 +8,7 @@ import com.solutionwerk.qb.repository.AccountRepository;
 import com.solutionwerk.qb.repository.ProfileRepository;
 import com.solutionwerk.qb.repository.RoleRepository;
 import com.solutionwerk.qb.util.RequestContext;
+import com.solutionwerk.qb.util.Util;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -178,8 +179,18 @@ public class AccountServiceBean implements AccountService {
         }
 
         if (user.getProfile() != null) {
-            Profile createdProfile = profileRepository.save(user.getProfile());
-            account.setProfile(createdProfile);
+            Profile profile = user.getProfile();
+            if (user.getProfile().getId() != null) {
+                profile = profileRepository.findOne(user.getProfile().getId());
+                if (profile == null) {
+                    // Cannot update Profile that hasn't been persisted
+                    LOGGER.error("Attempted to update a Profile, but the entity does not exist.");
+                    throw new NoResultException("Requested entity not found.");
+                }
+                Util.copyProperties(user.getProfile(), profile, true);
+            }
+            profile = profileRepository.save(profile);
+            account.setProfile(profile);
             update = true;
         }
 

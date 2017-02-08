@@ -47,7 +47,7 @@ public class Account extends TransactionalEntity {
 
     @OneToOne(
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
             name = "AccountProfile",
             joinColumns = @JoinColumn(name = "accountId",
